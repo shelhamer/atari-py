@@ -11,11 +11,11 @@ with open(os.path.join(os.path.dirname(__file__), 'atari_py/package_data.txt')) 
 class Build(DistutilsBuild):
     def run(self):
         cores_to_use = max(1, multiprocessing.cpu_count() - 1)
-        cmd = ['make', 'build', '-C', 'atari_py/ale_interface', '-j', str(cores_to_use)]
+        cmd = ['make', 'build', 'NUM_CORES={}'.format(cores_to_use)]
         try:
             subprocess.check_call(cmd)
         except subprocess.CalledProcessError as e:
-            sys.stderr.write("Could not build atari-py: %s. (HINT: are you sure cmake is installed? You might also be missing a library. Atari-py requires: zlib [installable as 'apt-get install zlib1g-dev' on Ubuntu].)\n" % e)
+            sys.stderr.write("Could not build atari-py: %s. (HINT: are you sure cmake is installed? You might also be missing a library. atari-py requires: zlib [installable as 'apt-get install zlib1g-dev' on Ubuntu].)\n" % e)
             raise
         except OSError as e:
             sys.stderr.write("Unable to execute '{}'. HINT: are you sure `make` is installed?\n".format(' '.join(cmd)))

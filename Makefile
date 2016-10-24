@@ -5,7 +5,7 @@ build:
 	mkdir -p build && \
 	cd build && \
 	cmake .. && \
-	make -j4
+	make -j$(NUM_CORES)
 
 clean:
 	rm -rf dist atari_py.egg-info
